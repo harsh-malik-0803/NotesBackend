@@ -6,7 +6,7 @@ export const newTask = async(req , res , next )=>{
         const {title , description} = req.body
         const task = await Task.create({title , description , user : req.user})
 
-        if(!task) next(new ErrorHandler( 404 , "Failed to Add Task" ))
+        if(!task) return next(new ErrorHandler( 404 , "Failed to Add Task" ))
 
         res.status(201).json({
             success : true ,
@@ -53,7 +53,7 @@ export const deleteTask = async(req , res , next )=>{
     try {
         const task = await Task.findById(req.params.id)
     
-        if(!task) next(new ErrorHandler( 404 , "Task Not found" ))
+        if(!task) return next(new ErrorHandler( 404 , "Task Not found" ))
 
         await task.deleteOne()
 
